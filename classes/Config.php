@@ -11,7 +11,7 @@ class Config
         'mysql' => [
             'host' => 'localhost',
             'user' => 'root',
-            'password' => 'arzelzolina10',
+            'password' => '',
             'database' => 'grade',
             'options' => [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

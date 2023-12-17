@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 13, 2023 at 04:32 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Generation Time: Dec 17, 2023 at 04:35 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `grado_db`
+-- Database: `grade`
 --
 
 -- --------------------------------------------------------
@@ -92,7 +92,9 @@ INSERT INTO `curriculums` (`id`, `student_id`, `curriculum_year_level`, `curricu
 (22, 26, '1st Year', 'First Semester', '2018 - 2019', '2023-03-12 16:55:27'),
 (23, 26, '2nd Year', 'Second Semester', '2017 - 2018', '2023-03-12 16:57:47'),
 (24, 26, '4th Year', 'Second Semester', '2019 - 2020', '2023-03-12 17:21:54'),
-(25, 32, '4th Year', 'First Semester', '2015 - 2016', '2023-03-13 09:37:49');
+(25, 32, '4th Year', 'First Semester', '2015 - 2016', '2023-03-13 09:37:49'),
+(26, 35, '1st Year', 'First Semester', '2023 - 2024', '2023-04-07 10:51:16'),
+(27, 36, '1st Year', 'Second Semester', '2022 - 2023', '2023-12-17 22:52:43');
 
 -- --------------------------------------------------------
 
@@ -117,7 +119,18 @@ INSERT INTO `otps` (`id`, `student_id`, `teacher_id`, `otp_code`, `created_at`) 
 (36, 26, NULL, '472849', '2023-03-12 12:48:47'),
 (37, 31, NULL, '202017', '2023-03-12 20:04:09'),
 (38, 32, NULL, '145162', '2023-03-12 20:05:06'),
-(39, 33, NULL, '576890', '2023-03-12 20:10:20');
+(39, 33, NULL, '576890', '2023-03-12 20:10:20'),
+(40, 34, NULL, '809683', '2023-04-07 10:49:20'),
+(41, 35, NULL, '521494', '2023-04-07 10:50:06'),
+(42, 36, NULL, '178462', '2023-12-17 22:33:06'),
+(43, NULL, 10, '929658', '2023-12-17 22:49:02'),
+(44, 37, NULL, '529639', '2023-12-17 23:04:28'),
+(45, 38, NULL, '883504', '2023-12-17 23:10:00'),
+(46, 39, NULL, '978561', '2023-12-17 23:20:26'),
+(47, 40, NULL, '174961', '2023-12-17 23:24:42'),
+(48, 41, NULL, '478541', '2023-12-17 23:27:30'),
+(49, 42, NULL, '953865', '2023-12-17 23:30:29'),
+(50, NULL, 11, '435391', '2023-12-17 23:32:39');
 
 -- --------------------------------------------------------
 
@@ -134,22 +147,25 @@ CREATE TABLE `students` (
   `first_name` text NOT NULL,
   `last_name` text NOT NULL,
   `status` text NOT NULL DEFAULT 'pending',
-  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `parents_email` text NOT NULL,
+  `parents_otp` text NOT NULL,
+  `verify_email` varchar(255) NOT NULL,
+  `verify_parents_email` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`id`, `course_id`, `id_number`, `email`, `password`, `first_name`, `last_name`, `status`, `created_at`) VALUES
-(24, 18, '447', 'huqipy@mailinator.com', 'asd', 'Avye', 'Slater', 'pending', '2023-03-11 20:39:30'),
-(25, 19, '123', 'hytixody@mailinator.com', 'zxc', 'Mara', 'Hubbard', 'pending', '2023-03-11 21:13:45'),
-(26, 19, '456', 'ortegacanillo76@gmail.com2', 'asd', 'Nissim', 'Wilcox', 'pending', '2023-03-12 12:48:47'),
-(28, 18, '872123', 'pusura@mailinator.com', 'Pa$$w0rd!', 'Orlando', 'Maldonado', 'pending', '2023-03-12 19:46:46'),
-(29, 18, '918123', 'ortegacanillo76@gmail.comww', 'Pa$$w0rd!', 'Ina', 'Richard', 'pending', '2023-03-12 19:47:55'),
-(30, 19, '106123', 'geguhemut@mailinator.com', 'Pa$$w0rd!', 'Ivana', 'Lynn', 'pending', '2023-03-12 19:59:34'),
-(32, 18, '234', 'ortegacanillo76@gmail.com', '123', 'Fritz', 'Erickson', 'pending', '2023-03-12 20:05:06'),
-(33, 19, '762123', 'hysa@mailinator.com', 'Pa$$w0rd!', 'Logan', 'Estrada', 'pending', '2023-03-12 20:10:20');
+INSERT INTO `students` (`id`, `course_id`, `id_number`, `email`, `password`, `first_name`, `last_name`, `status`, `created_at`, `parents_email`, `parents_otp`, `verify_email`, `verify_parents_email`) VALUES
+(24, 18, '447', 'huqipy@mailinator.com', 'asd', 'Avye', 'Slater', 'pending', '2023-03-11 20:39:30', '', '', '', ''),
+(26, 19, '456', 'ortegacanillo76@gmail.com2', 'asd', 'Nissim', 'Wilcox', 'pending', '2023-03-12 12:48:47', '', '', '', ''),
+(28, 18, '872123', 'pusura@mailinator.com', 'Pa$$w0rd!', 'Orlando', 'Maldonado', 'pending', '2023-03-12 19:46:46', '', '', '', ''),
+(29, 18, '918123', 'ortegacanillo76@gmail.comww', 'Pa$$w0rd!', 'Ina', 'Richard', 'pending', '2023-03-12 19:47:55', '', '', '', ''),
+(30, 19, '106123', 'geguhemut@mailinator.com', 'Pa$$w0rd!', 'Ivana', 'Lynn', 'pending', '2023-03-12 19:59:34', '', '', '', ''),
+(32, 18, '234', 'ortegacanillo76@gmail.com', '123', 'Fritz', 'Erickson', 'pending', '2023-03-12 20:05:06', '', '', '', ''),
+(33, 19, '762123', 'hysa@mailinator.com', 'Pa$$w0rd!', 'Logan', 'Estrada', 'pending', '2023-03-12 20:10:20', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -199,7 +215,8 @@ INSERT INTO `subjects` (`id`, `course_id`, `subject_code`, `subject_description`
 (13, 19, 'THEO', 'fsfsd', '9', 'null', 'close', '2023-03-12 11:24:13'),
 (14, 19, 'Ratione dicta praese', 'Voluptas quia qui de', '45', 'null', 'close', '2023-03-12 11:35:40'),
 (15, 18, 'COMP1', 'Computer Programming', '3', 'null', 'close', '2023-03-12 12:04:24'),
-(16, 18, 'WEB DEV', 'Web Development', '3', 'null', 'close', '2023-03-12 12:19:07');
+(16, 18, 'WEB DEV', 'Web Development', '3', 'null', 'close', '2023-03-12 12:19:07'),
+(18, 18, 'IT321', 'BSI', '2', 'null', 'close', '2023-12-17 22:45:01');
 
 -- --------------------------------------------------------
 
@@ -306,19 +323,19 @@ ALTER TABLE `courses`
 -- AUTO_INCREMENT for table `curriculums`
 --
 ALTER TABLE `curriculums`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `otps`
 --
 ALTER TABLE `otps`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `student_subjects`
@@ -330,13 +347,13 @@ ALTER TABLE `student_subjects`
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
